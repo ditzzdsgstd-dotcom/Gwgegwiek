@@ -1,5 +1,5 @@
 -- YoxanXHub V2 | Hypershot Gunfight | 1/20
-loadstring(game:HttpGet("https://raw.githubusercontent.com/1nig1htmare1234/SCRIPTS/main/Orion.lua"))()
+local orionlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/1nig1htmare1234/SCRIPTS/main/Orion.lua"))()
 
 getgenv().OrionLoaded = false
 repeat wait() until OrionLib
