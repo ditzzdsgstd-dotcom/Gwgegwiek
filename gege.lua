@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
@@ -34,11 +34,10 @@ Rayfield:CreateButton({
                 Duration = 4
             })
         end
-    end,
-    SectionParent = nil
+    end
 })
 
--- Boost
+-- Boost / Unboost
 local boostedSeats = {}
 
 Rayfield:CreateButton({
@@ -84,7 +83,7 @@ Rayfield:CreateButton({
     end
 })
 
--- Auto Farm (WIP)
+-- Auto Farm (Experimental)
 local isAutoFarm = false
 local farmConnection
 
