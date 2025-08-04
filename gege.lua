@@ -1,22 +1,23 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/1nig1htmare1234/SCRIPTS/main/Orion.lua"))()
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
-local Window = Rayfield:CreateWindow({
+local Window = OrionLib:MakeWindow({
     Name = "YoxanXHub | Build A Plane",
-    LoadingTitle = "YoxanXHub",
-    LoadingSubtitle = "By yoxanx",
-    ConfigurationSaving = {
-        Enabled = false
-    },
-    Discord = {
-        Enabled = false
-    },
-    KeySystem = false
+    HidePremium = false,
+    SaveConfig = false,
+    IntroText = "YoxanXHub Loaded!",
+    ConfigFolder = "YoxanXHub"
 })
 
--- Quick Money
-Rayfield:CreateButton({
+--==[ Quick Money Tab ]==--
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://6035078880",
+    PremiumOnly = false
+})
+
+MainTab:AddButton({
     Name = "Quick Money",
     Callback = function()
         local character = LocalPlayer.Character
@@ -28,19 +29,19 @@ Rayfield:CreateButton({
             seat.CFrame = seat.CFrame + forwardVec * 100000
             character:SetPrimaryPartCFrame(seat.CFrame)
         else
-            Rayfield:Notify({
-                Title = "Warning",
-                Content = "You must sit in the vehicle first!",
-                Duration = 4
+            OrionLib:MakeNotification({
+                Name = "Warning",
+                Content = "You must be seated in a vehicle!",
+                Time = 4
             })
         end
     end
 })
 
--- Boost / Unboost
+--==[ Boost / Unboost ]==--
 local boostedSeats = {}
 
-Rayfield:CreateButton({
+MainTab:AddButton({
     Name = "Boost / Unboost",
     Callback = function()
         local character = LocalPlayer.Character
@@ -51,47 +52,47 @@ Rayfield:CreateButton({
             if boostedSeats[seat] then
                 seat.MaxSpeed = boostedSeats[seat]
                 boostedSeats[seat] = nil
-                Rayfield:Notify({
-                    Title = "Unboosted",
-                    Content = "Vehicle returned to normal speed.",
-                    Duration = 3
+                OrionLib:MakeNotification({
+                    Name = "Unboosted",
+                    Content = "Vehicle speed reset to normal.",
+                    Time = 3
                 })
             else
                 if seat.MaxSpeed then
                     boostedSeats[seat] = seat.MaxSpeed
                     seat.MaxSpeed = 300
-                    Rayfield:Notify({
-                        Title = "Boosted",
-                        Content = "Vehicle speed set to 300!",
-                        Duration = 3
+                    OrionLib:MakeNotification({
+                        Name = "Boosted!",
+                        Content = "Vehicle speed set to 300.",
+                        Time = 3
                     })
                 else
-                    Rayfield:Notify({
-                        Title = "Error",
-                        Content = "MaxSpeed not found on this seat.",
-                        Duration = 3
+                    OrionLib:MakeNotification({
+                        Name = "Error",
+                        Content = "Seat does not support MaxSpeed.",
+                        Time = 3
                     })
                 end
             end
         else
-            Rayfield:Notify({
-                Title = "Warning",
-                Content = "You must sit on a VehicleSeat!",
-                Duration = 4
+            OrionLib:MakeNotification({
+                Name = "Warning",
+                Content = "You must be on a VehicleSeat!",
+                Time = 4
             })
         end
     end
 })
 
--- Auto Farm (Experimental)
+--==[ Auto Farm Toggle ]==--
 local isAutoFarm = false
 local farmConnection
 
-Rayfield:CreateToggle({
+MainTab:AddToggle({
     Name = "Auto Farm (Experimental)",
-    CurrentValue = false,
-    Callback = function(state)
-        isAutoFarm = state
+    Default = false,
+    Callback = function(Value)
+        isAutoFarm = Value
         if isAutoFarm then
             farmConnection = LocalPlayer.CharacterAdded:Connect(function(character)
                 local humanoid = character:WaitForChild("Humanoid")
